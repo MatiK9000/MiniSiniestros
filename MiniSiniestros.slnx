@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="MiniSiniestros.Api/MiniSiniestros.Api.csproj" Id="3869d255-13c6-49d4-bd7c-eba008e876b1" />
+  <Project Path="MiniSiniestros.Data.Migrations/MiniSiniestros.Data.Migrations.csproj" Id="bd273ecd-9304-4198-bf4e-d374016dfc4b" />
+  <Project Path="MiniSiniestros.Data/MiniSiniestros.Data.csproj" Id="0dd57e25-35a4-4dd3-a24a-9138fdae9d8e" />
+  <Project Path="MiniSiniestros.Dto/MiniSiniestros.Dto.csproj" Id="9fe203f6-3ef7-4c9a-96d0-241c5758a625" />
+  <Project Path="MiniSiniestros.Entities/MiniSiniestros.Entities.csproj" Id="c0e623b4-516b-4b02-b94b-228b0fd84e68" />
+  <Project Path="MiniSiniestros.Services/MiniSiniestros.Services.csproj" Id="243fabc2-22bd-4ad2-8ca5-9035a0a82f9a" />
+  <Project Path="MiniSiniestros.ViewModels/MiniSiniestros.ViewModels.csproj" Id="a17ec0f1-8bac-4e81-ae5d-4f036658d52f" />
+  <Project Path="MiniSiniestros.Web/MiniSiniestros.Web.csproj" Id="52843519-1daf-4aa2-b130-b63d1c2c2833" />
+</Solution>
