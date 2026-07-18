@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace MiniSiniestros.Entities
 {
-    public class Siniestro
-    {
         public class Siniestro
         {
             public int Id { get; set; }
@@ -35,5 +33,5 @@ namespace MiniSiniestros.Entities
             // Solo si implementamos la integración opcional
             public ICollection<NotificacionSrt> NotificacionesSrt { get; set; } = [];
         }
-    }
 }
+
