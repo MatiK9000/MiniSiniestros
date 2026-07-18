@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MiniSiniestros.Entities
+{
+    public class HistorialEstadoSiniestro
+    {
+        public int Id { get; set; }
+
+        public int SiniestroId { get; set; }
+        public required Siniestro Siniestro { get; set; }
+
+        public EstadoSiniestro EstadoAnterior { get; set; }
+
+        public EstadoSiniestro EstadoNuevo { get; set; }
+
+        public DateTime FechaCambio { get; set; }
+    }
+}
