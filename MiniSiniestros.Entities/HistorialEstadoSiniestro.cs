@@ -11,7 +11,8 @@ namespace MiniSiniestros.Entities
         public int Id { get; set; }
 
         public int SiniestroId { get; set; }
-        public required Siniestro Siniestro { get; set; }
+
+        public Siniestro Siniestro { get; set; } = null!;
 
         public EstadoSiniestro EstadoAnterior { get; set; }
 

@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using MiniSiniestros.Api.Mappings;
 using MiniSiniestros.Data;
+using MiniSiniestros.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -16,6 +18,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         sqlServerOptions =>
             sqlServerOptions.MigrationsAssembly(
                 "MiniSiniestros.Data.Migrations")));
+
+builder.Services.AddAutoMapper(
+    config => { },
+    typeof(SiniestroProfile));
+
+builder.Services.AddScoped<ISiniestroService, SiniestroService>();
 
 var app = builder.Build();
 

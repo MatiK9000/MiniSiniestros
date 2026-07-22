@@ -10,9 +10,9 @@ namespace MiniSiniestros.Entities
     {
         public int Id { get; set; }
 
-        public string Cuit { get; set; }
+        public required string Cuit { get; set; }
 
-        public string RazonSocial { get; set; }
+        public required string RazonSocial { get; set; }
 
         public ICollection<Siniestro> Siniestros { get; set; } = [];
     }
