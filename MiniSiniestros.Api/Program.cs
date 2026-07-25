@@ -61,6 +61,9 @@ builder.Services.AddAutoMapper(
     typeof(SiniestroProfile));
 
 builder.Services.AddScoped<ISiniestroService, SiniestroService>();
+builder.Services.AddScoped<ITrabajadorService, TrabajadorService>();
+builder.Services.AddScoped<IEmpleadorService, EmpleadorService>();
+builder.Services.AddScoped<IPrestadorMedicoService, PrestadorMedicoService>();
 
 var app = builder.Build();
 
