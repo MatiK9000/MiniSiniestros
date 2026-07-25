@@ -150,17 +150,34 @@ namespace MiniSiniestros.Services
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<(IEnumerable<Siniestro> Elementos, int TotalRegistros)> ObtenerTodosAsync(int pagina, int tamanioPagina)
+        public async Task<(IEnumerable<Siniestro> Elementos, int TotalRegistros)> ObtenerTodosAsync(int pagina, int tamanioPagina, EstadoSiniestro? estado, string? numero, int? empleadorId)
         {
             IQueryable<Siniestro> consulta = context.Siniestros
-                .AsNoTracking()
-                .Include(s => s.Empleador)
-                .Include(s => s.Trabajador)
-                .OrderByDescending(s => s.FechaAlta);
+             .AsNoTracking()
+             .Include(s => s.Empleador)
+             .Include(s => s.Trabajador);
+
+            if (estado.HasValue)
+            {
+                consulta = consulta.Where(s => s.Estado == estado.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(numero))
+            {
+                consulta = consulta.Where(
+                    s => s.NumeroSiniestro.Contains(numero));
+            }
+
+            if (empleadorId.HasValue)
+            {
+                consulta = consulta.Where(
+                    s => s.EmpleadorId == empleadorId.Value);
+            }
 
             int totalRegistros = await consulta.CountAsync();
 
             List<Siniestro> elementos = await consulta
+                .OrderByDescending(s => s.FechaAlta)
                 .Skip((pagina - 1) * tamanioPagina)
                 .Take(tamanioPagina)
                 .ToListAsync();
