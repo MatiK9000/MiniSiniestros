@@ -1,6 +1,8 @@
-﻿using MiniSiniestros.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using MiniSiniestros.Data;
 using MiniSiniestros.Entities;
-using Microsoft.EntityFrameworkCore;
+using MiniSiniestros.Services.Exceptions;
 
 
 namespace MiniSiniestros.Services
@@ -8,16 +10,18 @@ namespace MiniSiniestros.Services
     public class SiniestroService : ISiniestroService
     {
         private readonly ApplicationDbContext context;
+        private readonly ILogger<SiniestroService> logger;
 
-        public SiniestroService(ApplicationDbContext context)
+        public SiniestroService(ApplicationDbContext context, ILogger<SiniestroService> logger)
         {
             this.context = context;
+            this.logger = logger;
         }
 
         public async Task<bool> AsignarPrestadorAsync(int siniestroId, int prestadorMedicoId)
         {
             bool existeSiniestro = await context.Siniestros
-        .AnyAsync(s => s.Id == siniestroId);
+                .AnyAsync(s => s.Id == siniestroId);
 
             if (!existeSiniestro)
             {
@@ -39,7 +43,7 @@ namespace MiniSiniestros.Services
 
             if (yaEstaAsignado)
             {
-                return false;
+                throw new ReglaNegocioException("El prestador ya está asignado al siniestro.");
             }
 
             SiniestroPrestador asignacion = new SiniestroPrestador
@@ -52,6 +56,11 @@ namespace MiniSiniestros.Services
             context.SiniestrosPrestadores.Add(asignacion);
 
             await context.SaveChangesAsync();
+
+            logger.LogInformation(
+                    "Se asignó el prestador {PrestadorId} al siniestro {SiniestroId}.",
+                    prestadorMedicoId,
+                    siniestroId);
 
             return true;
         }
@@ -82,6 +91,12 @@ namespace MiniSiniestros.Services
 
             await context.SaveChangesAsync();
 
+            logger.LogInformation(
+                    "El siniestro {SiniestroId} cambió del estado {EstadoAnterior} al estado {EstadoNuevo}.",
+                    siniestro.Id,
+                    estadoAnterior,
+                    nuevoEstado);
+
             return true;
         }
 
@@ -92,7 +107,11 @@ namespace MiniSiniestros.Services
 
             if (!empleadorExiste)
             {
-                throw new ArgumentException("El empleador indicado no existe.");
+                logger.LogWarning(
+                    "No se pudo crear el siniestro porque el empleador {EmpleadorId} no existe.",
+                    siniestro.EmpleadorId);
+
+                throw new ReglaNegocioException("El empleador no existe.");
             }
 
             bool trabajadorExiste = await context.Trabajadores
@@ -100,7 +119,7 @@ namespace MiniSiniestros.Services
 
             if (!trabajadorExiste)
             {
-                throw new ArgumentException("El trabajador indicado no existe.");
+                throw new ReglaNegocioException("El trabajador no existe.");
             }
 
             siniestro.FechaAlta = DateTime.Now;
@@ -109,6 +128,11 @@ namespace MiniSiniestros.Services
             context.Siniestros.Add(siniestro);
 
             await context.SaveChangesAsync();
+
+            logger.LogInformation(
+                    "Se creó el siniestro {NumeroSiniestro} con Id {SiniestroId}.",
+                    siniestro.NumeroSiniestro,
+                    siniestro.Id);
 
             return siniestro;
         }

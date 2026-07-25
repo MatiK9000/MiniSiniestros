@@ -1,9 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using MiniSiniestros.Api.Mappings;
+using MiniSiniestros.Api.Middlewares;
 using MiniSiniestros.Data;
 using MiniSiniestros.Services;
+using Serilog;
+using Serilog.Events;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) =>
+{
+    configuration.ReadFrom.Configuration(context.Configuration);
+});
+
 
 // Add services to the container.
 
@@ -33,6 +43,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
