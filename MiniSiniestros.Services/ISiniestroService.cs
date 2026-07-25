@@ -9,7 +9,7 @@ namespace MiniSiniestros.Services
 {
     public interface ISiniestroService
     {
-        Task<List<Siniestro>> ObtenerTodosAsync();
+        Task<(IEnumerable<Siniestro> Elementos, int TotalRegistros)> ObtenerTodosAsync(int pagina, int tamanioPagina);
 
         Task<Siniestro?> ObtenerPorIdAsync(int id);
 

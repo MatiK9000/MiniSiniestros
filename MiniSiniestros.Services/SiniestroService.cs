@@ -150,13 +150,22 @@ namespace MiniSiniestros.Services
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<List<Siniestro>> ObtenerTodosAsync()
+        public async Task<(IEnumerable<Siniestro> Elementos, int TotalRegistros)> ObtenerTodosAsync(int pagina, int tamanioPagina)
         {
-            return await context.Siniestros
-                .AsNoTracking()//Le indica a Entity Framework que estos objetos son solo para consulta. Como no los vamos a modificar en este método, EF no necesita seguir sus cambios.
-                .Include(s => s.Empleador)//Trae también los datos relacionados del empleador y del trabajador.
+            IQueryable<Siniestro> consulta = context.Siniestros
+                .AsNoTracking()
+                .Include(s => s.Empleador)
                 .Include(s => s.Trabajador)
+                .OrderByDescending(s => s.FechaAlta);
+
+            int totalRegistros = await consulta.CountAsync();
+
+            List<Siniestro> elementos = await consulta
+                .Skip((pagina - 1) * tamanioPagina)
+                .Take(tamanioPagina)
                 .ToListAsync();
+
+            return (elementos, totalRegistros);
         }
     }
 }

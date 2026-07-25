@@ -69,13 +69,26 @@ namespace MiniSiniestros.Api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SiniestroDto>>> ObtenerTodos()
+        public async Task<ActionResult<RespuestaPaginadaDto<SiniestroDto>>> ObtenerTodos([FromQuery] PaginacionDto paginacion)
         {
-            var siniestros = await siniestroService.ObtenerTodosAsync();
+            var resultado = await siniestroService.ObtenerTodosAsync(
+                paginacion.Pagina,
+                paginacion.TamanioPagina);
 
-            var siniestrosDto = mapper.Map<IEnumerable<SiniestroDto>>(siniestros);
+            IEnumerable<SiniestroDto> elementos =
+                mapper.Map<IEnumerable<SiniestroDto>>(resultado.Elementos);
 
-            return Ok(siniestrosDto);
+            var respuesta = new RespuestaPaginadaDto<SiniestroDto>
+            {
+                Elementos = elementos,
+                PaginaActual = paginacion.Pagina,
+                TamanioPagina = paginacion.TamanioPagina,
+                TotalRegistros = resultado.TotalRegistros,
+                TotalPaginas = (int)Math.Ceiling(
+                    resultado.TotalRegistros / (double)paginacion.TamanioPagina)
+            };
+
+            return Ok(respuesta);
         }
 
         [HttpGet("{id:int}")]
