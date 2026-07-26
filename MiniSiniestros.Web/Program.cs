@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MiniSiniestros.Data;
 using MiniSiniestros.Services;
+using MiniSiniestros.Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,9 +22,10 @@ builder.Services.AddScoped<IPrestadorMedicoService, PrestadorMedicoService>();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
 
