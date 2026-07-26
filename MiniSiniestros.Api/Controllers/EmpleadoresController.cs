@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MiniSiniestros.Dto;
 using MiniSiniestros.Entities;
@@ -6,6 +7,7 @@ using MiniSiniestros.Services;
 
 namespace MiniSiniestros.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/empleadores")]
 public class EmpleadoresController : ControllerBase
