@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Elementos de la solución/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="MiniSiniestros.Api/MiniSiniestros.Api.csproj" Id="3869d255-13c6-49d4-bd7c-eba008e876b1" />
   <Project Path="MiniSiniestros.Data.Migrations/MiniSiniestros.Data.Migrations.csproj" Id="bd273ecd-9304-4198-bf4e-d374016dfc4b" />
   <Project Path="MiniSiniestros.Data/MiniSiniestros.Data.csproj" Id="0dd57e25-35a4-4dd3-a24a-9138fdae9d8e" />
