@@ -1,0 +1,114 @@
+﻿@model MiniSiniestros.ViewModels.SiniestrosIndexViewModel
+
+@{
+    ViewData["Title"] = "Siniestros";
+}
+
+<h1>Siniestros</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        Nuevo Siniestro
+    </a>
+</p>
+
+<form asp-action="Index" method="get" class="row g-3 mb-4">
+
+    <div class="col-md-3">
+        <label asp-for="Filtros.Numero" class="form-label">
+            Número
+        </label>
+
+        <input asp-for="Filtros.Numero"
+               class="form-control"
+               placeholder="Ej: SIN-0001" />
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Filtros.Estado" class="form-label">
+            Estado
+        </label>
+
+        <select asp-for="Filtros.Estado"
+                class="form-select">
+            <option value="">Todos</option>
+
+            @foreach (var estado in Model.Estados)
+            {
+                <option value="@estado">
+                    @estado
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Filtros.EmpleadorId" class="form-label">
+            Empleador
+        </label>
+
+        <select asp-for="Filtros.EmpleadorId"
+                class="form-select">
+            <option value="">Todos</option>
+
+            @foreach (var empleador in Model.Empleadores)
+            {
+                <option value="@empleador.Id">
+                    @empleador.Nombre
+                </option>
+            }
+        </select>
+    </div>
+
+    <input asp-for="Filtros.Pagina" type="hidden" value="1" />
+
+    <div class="col-md-3 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-primary">
+            Buscar
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Limpiar
+        </a>
+    </div>
+
+</form>
+
+<p>
+    Total de registros: @Model.TotalRegistros
+</p>
+
+
+@if (!Model.Siniestros.Any())
+{
+    <div class="alert alert-info">
+        No se encontraron siniestros.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Fecha de alta</th>
+                <th>Estado</th>
+                <th>Empleador</th>
+                <th>Trabajador</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var siniestro in Model.Siniestros)
+            {
+                <tr>
+                    <td>@siniestro.Numero</td>
+                    <td>@siniestro.FechaAlta.ToString("dd/MM/yyyy")</td>
+                    <td>@siniestro.Estado</td>
+                    <td>@siniestro.Empleador</td>
+                    <td>@siniestro.Trabajador</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

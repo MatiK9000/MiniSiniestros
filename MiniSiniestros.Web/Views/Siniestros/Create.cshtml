@@ -1,0 +1,68 @@
+﻿@model MiniSiniestros.ViewModels.CrearSiniestroViewModel
+
+@{
+    ViewData["Title"] = "Nuevo Siniestro";
+}
+
+<h1>Nuevo Siniestro</h1>
+
+<form asp-action="Create" method="post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Numero" class="form-label"></label>
+
+        <input asp-for="Numero" class="form-control" />
+
+        <span asp-validation-for="Numero" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="EmpleadorId" class="form-label"></label>
+
+        <select asp-for="EmpleadorId" class="form-select">
+            <option value="">Seleccione...</option>
+
+            @foreach (var empleador in Model.Empleadores)
+            {
+                <option value="@empleador.Id">
+                    @empleador.Nombre
+                </option>
+            }
+        </select>
+
+        <span asp-validation-for="EmpleadorId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TrabajadorId" class="form-label"></label>
+
+        <select asp-for="TrabajadorId" class="form-select">
+            <option value="">Seleccione...</option>
+
+            @foreach (var trabajador in Model.Trabajadores)
+            {
+                <option value="@trabajador.Id">
+                    @trabajador.Nombre
+                </option>
+            }
+        </select>
+
+        <span asp-validation-for="TrabajadorId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Guardar
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Cancelar
+    </a>
+
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
