@@ -1,0 +1,26 @@
+﻿@model MiniSiniestros.ViewModels.EmpleadorDetalleViewModel
+
+@{
+    ViewData["Title"] = "Detalle del empleador";
+}
+
+<h1>Detalle del empleador</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">CUIT</dt>
+    <dd class="col-sm-9">@Model.Cuit</dd>
+
+    <dt class="col-sm-3">Razón social</dt>
+    <dd class="col-sm-9">@Model.RazonSocial</dd>
+</dl>
+
+<a asp-action="Edit"
+   asp-route-id="@Model.Id"
+   class="btn btn-warning">
+    Editar
+</a>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Volver
+</a>

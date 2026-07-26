@@ -1,0 +1,61 @@
+﻿@model MiniSiniestros.ViewModels.CambiarEstadoSiniestroViewModel
+
+@{
+    ViewData["Title"] = "Cambiar estado";
+}
+
+<h1>Cambiar estado</h1>
+
+<div class="mb-3">
+    <strong>Siniestro:</strong> @Model.Numero
+</div>
+
+<div class="mb-3">
+    <strong>Estado actual:</strong> @Model.EstadoActual
+</div>
+
+<form asp-action="CambiarEstado" method="post">
+
+    <input asp-for="SiniestroId" type="hidden" />
+    <input asp-for="Numero" type="hidden" />
+    <input asp-for="EstadoActual" type="hidden" />
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="NuevoEstado"
+               class="form-label"></label>
+
+        <select asp-for="NuevoEstado"
+                class="form-select">
+            <option value="">Seleccione...</option>
+
+            @foreach (var estado in Model.Estados)
+            {
+                <option value="@estado">
+                    @estado
+                </option>
+            }
+        </select>
+
+        <span asp-validation-for="NuevoEstado"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Guardar
+    </button>
+
+    <a asp-action="Details"
+       asp-route-id="@Model.SiniestroId"
+       class="btn btn-secondary">
+        Cancelar
+    </a>
+
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

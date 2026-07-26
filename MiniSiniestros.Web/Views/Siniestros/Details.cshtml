@@ -1,0 +1,34 @@
+﻿@model MiniSiniestros.ViewModels.SiniestroDetalleViewModel
+
+@{
+    ViewData["Title"] = "Detalle del siniestro";
+}
+
+<h1>Detalle del siniestro</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Número</dt>
+    <dd class="col-sm-9">@Model.Numero</dd>
+
+    <dt class="col-sm-3">Fecha de alta</dt>
+    <dd class="col-sm-9">@Model.FechaAlta.ToString("dd/MM/yyyy")</dd>
+
+    <dt class="col-sm-3">Estado</dt>
+    <dd class="col-sm-9">@Model.Estado</dd>
+
+    <dt class="col-sm-3">Empleador</dt>
+    <dd class="col-sm-9">@Model.Empleador</dd>
+
+    <dt class="col-sm-3">Trabajador</dt>
+    <dd class="col-sm-9">@Model.Trabajador</dd>
+</dl>
+
+<a asp-action="CambiarEstado"
+   asp-route-id="@Model.Id"
+   class="btn btn-warning">
+    Cambiar estado
+</a>
+
+<a asp-action="Index" class="btn btn-secondary">
+    Volver
+</a>

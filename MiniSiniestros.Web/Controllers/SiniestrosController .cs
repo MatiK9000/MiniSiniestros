@@ -114,6 +114,77 @@ public class SiniestrosController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var siniestro = await siniestroService.ObtenerPorIdAsync(id);
+
+        if (siniestro is null)
+        {
+            return NotFound();
+        }
+
+        var modelo = new SiniestroDetalleViewModel
+        {
+            Id = siniestro.Id,
+            Numero = siniestro.NumeroSiniestro,
+            FechaAlta = siniestro.FechaAlta,
+            Estado = siniestro.Estado.ToString(),
+            Empleador = siniestro.Empleador.RazonSocial,
+            Trabajador =
+                $"{siniestro.Trabajador.Apellido}, {siniestro.Trabajador.Nombre}"
+        };
+
+        return View(modelo);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> CambiarEstado(int id)
+    {
+        var siniestro = await siniestroService.ObtenerPorIdAsync(id);
+
+        if (siniestro is null)
+        {
+            return NotFound();
+        }
+
+        var modelo = new CambiarEstadoSiniestroViewModel
+        {
+            SiniestroId = siniestro.Id,
+            Numero = siniestro.NumeroSiniestro,
+            EstadoActual = siniestro.Estado.ToString()
+        };
+
+        return View(modelo);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CambiarEstado(
+    CambiarEstadoSiniestroViewModel modelo)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(modelo);
+        }
+
+        var actualizado = await siniestroService.CambiarEstadoAsync(
+            modelo.SiniestroId,
+            modelo.NuevoEstado!.Value);
+
+        if (!actualizado)
+        {
+            return NotFound();
+        }
+
+        TempData["MensajeExito"] =
+            "El estado del siniestro se actualizó correctamente.";
+
+        return RedirectToAction(
+            nameof(Details),
+            new { id = modelo.SiniestroId });
+    }
+
     private async Task CargarCombosAsync(
         CrearSiniestroViewModel modelo)
     {

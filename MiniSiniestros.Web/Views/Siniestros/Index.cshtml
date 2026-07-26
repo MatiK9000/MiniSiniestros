@@ -4,13 +4,14 @@
     ViewData["Title"] = "Siniestros";
 }
 
-<h1>Siniestros</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Siniestros</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">
+    <a asp-action="Create"
+       class="btn btn-primary">
         Nuevo Siniestro
     </a>
-</p>
+</div>
 
 <form asp-action="Index" method="get" class="row g-3 mb-4">
 
@@ -95,6 +96,7 @@ else
                 <th>Estado</th>
                 <th>Empleador</th>
                 <th>Trabajador</th>
+                <th>Acciones</th>
             </tr>
         </thead>
 
@@ -107,6 +109,13 @@ else
                     <td>@siniestro.Estado</td>
                     <td>@siniestro.Empleador</td>
                     <td>@siniestro.Trabajador</td>
+                    <td>
+                        <a asp-action="Details"
+                           asp-route-id="@siniestro.Id"
+                           class="btn btn-sm btn-outline-primary">
+                            Ver
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>

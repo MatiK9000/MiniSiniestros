@@ -1,0 +1,23 @@
+﻿@model MiniSiniestros.ViewModels.PrestadorMedicoDetalleViewModel
+
+@{
+    ViewData["Title"] = "Detalle del prestador médico";
+}
+
+<h1>Detalle del prestador médico</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Nombre</dt>
+    <dd class="col-sm-9">@Model.Nombre</dd>
+</dl>
+
+<a asp-action="Edit"
+   asp-route-id="@Model.Id"
+   class="btn btn-warning">
+    Editar
+</a>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Volver
+</a>

@@ -1,0 +1,47 @@
+﻿@model MiniSiniestros.ViewModels.EmpleadorFormularioViewModel
+
+@{
+    ViewData["Title"] = "Editar Empleador";
+}
+
+<h1>Editar Empleador</h1>
+
+<form asp-action="Edit" method="post">
+
+    <input asp-for="Id" type="hidden" />
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Cuit" class="form-label"></label>
+        <input asp-for="Cuit" class="form-control" />
+        <span asp-validation-for="Cuit"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="RazonSocial"
+               class="form-label"></label>
+        <input asp-for="RazonSocial"
+               class="form-control" />
+        <span asp-validation-for="RazonSocial"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Guardar cambios
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancelar
+    </a>
+
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

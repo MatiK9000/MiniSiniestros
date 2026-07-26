@@ -1,0 +1,35 @@
+﻿@model MiniSiniestros.ViewModels.EmpleadorDetalleViewModel
+
+@{
+    ViewData["Title"] = "Eliminar Empleador";
+}
+
+<h1>Eliminar Empleador</h1>
+
+<div class="alert alert-warning">
+    ¿Está seguro de que desea eliminar este empleador?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">CUIT</dt>
+    <dd class="col-sm-9">@Model.Cuit</dd>
+
+    <dt class="col-sm-3">Razón social</dt>
+    <dd class="col-sm-9">@Model.RazonSocial</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+
+    <input asp-for="Id" type="hidden" />
+
+    <button type="submit"
+            class="btn btn-danger">
+        Eliminar
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancelar
+    </a>
+
+</form>

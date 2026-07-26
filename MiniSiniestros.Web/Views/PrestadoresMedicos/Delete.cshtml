@@ -1,0 +1,30 @@
+﻿@model MiniSiniestros.ViewModels.PrestadorMedicoDetalleViewModel
+
+@{
+    ViewData["Title"] = "Eliminar prestador médico";
+}
+
+<h1>Eliminar prestador médico</h1>
+
+<div class="alert alert-warning">
+    ¿Está seguro de que desea eliminar este prestador médico?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Nombre</dt>
+    <dd class="col-sm-9">@Model.Nombre</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input asp-for="Id" type="hidden" />
+
+    <button type="submit"
+            class="btn btn-danger">
+        Eliminar
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancelar
+    </a>
+</form>
